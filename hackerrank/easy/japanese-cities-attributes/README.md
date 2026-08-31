@@ -1,4 +1,4 @@
-# Select By ID
+# Japanese Cities' Attributes
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-Easy-green)
 
@@ -24,10 +24,10 @@ The **CITY** table is described as follows:
 **Language:** SQL  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-08-31T21:05:45.349Z  
+**Submitted:** 2026-08-31T21:06:43.365Z  
 
 ```sql
-SELECT * FROM CITY WHERE ID = 1661;
+SELECT * FROM CITY WHERE COUNTRYCODE = 'JPN';
 
 ```
 
