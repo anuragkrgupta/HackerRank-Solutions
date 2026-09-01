@@ -7,56 +7,64 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'reverseArray' function below.
+ * Complete the 'hourglassSum' function below.
  *
- * The function is expected to return an INTEGER_ARRAY.
- * The function accepts INTEGER_ARRAY a as parameter.
+ * The function is expected to return an INTEGER.
+ * The function accepts 2D_INTEGER_ARRAY arr as parameter.
  */
-    
-vector<int> reverseArray(vector<int> a) {
-    int start = 0;
-    int end = a.size() - 1;
-    while(start < end){
-        swap(a[start], a[end]);
-        start ++;
-        end --;
+
+int hourglassSum(vector<vector<int>> arr) {
+    int maxSum = INT_MIN;
+
+    for (int i = 0; i <= 3; i++) {
+        for (int j = 0; j <= 3; j++) {
+
+            int sum = 0;
+
+           
+            sum += arr[i][j];
+            sum += arr[i][j + 1];
+            sum += arr[i][j + 2];
+
+           
+            sum += arr[i + 1][j + 1];
+
+            
+            sum += arr[i + 2][j];
+            sum += arr[i + 2][j + 1];
+            sum += arr[i + 2][j + 2];
+
+            maxSum = max(maxSum, sum);
+        }
     }
-    return a;
+
+    return maxSum;
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string arr_count_temp;
-    getline(cin, arr_count_temp);
+    vector<vector<int>> arr(6);
 
-    int arr_count = stoi(ltrim(rtrim(arr_count_temp)));
+    for (int i = 0; i < 6; i++) {
+        arr[i].resize(6);
 
-    string arr_temp_temp;
-    getline(cin, arr_temp_temp);
+        string arr_row_temp_temp;
+        getline(cin, arr_row_temp_temp);
 
-    vector<string> arr_temp = split(rtrim(arr_temp_temp));
+        vector<string> arr_row_temp = split(rtrim(arr_row_temp_temp));
 
-    vector<int> arr(arr_count);
+        for (int j = 0; j < 6; j++) {
+            int arr_row_item = stoi(arr_row_temp[j]);
 
-    for (int i = 0; i < arr_count; i++) {
-        int arr_item = stoi(arr_temp[i]);
-
-        arr[i] = arr_item;
-    }
-
-    vector<int> res = reverseArray(arr);
-
-    for (size_t i = 0; i < res.size(); i++) {
-        fout << res[i];
-
-        if (i != res.size() - 1) {
-            fout << " ";
+            arr[i][j] = arr_row_item;
         }
     }
 
-    fout << "\n";
+    int result = hourglassSum(arr);
+
+    fout << result << "\n";
 
     fout.close();
 
