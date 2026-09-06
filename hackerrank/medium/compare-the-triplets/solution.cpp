@@ -7,45 +7,70 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'simpleArraySum' function below.
+ * Complete the 'compareTriplets' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts INTEGER_ARRAY ar as parameter.
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY a
+ *  2. INTEGER_ARRAY b
  */
 
-int simpleArraySum(vector<int> ar) {
-    int sum = 0;
-for(int i = 0; i<ar.size(); i++){
-    sum += ar[i];
-}
-return sum;
-}
+vector<int> compareTriplets(vector<int> a, vector<int> b) {
+    int alice = 0;
+    int bob = 0;
 
+    for (int i = 0; i < 3; i++) {
+        if (a[i] > b[i]) {
+            alice++;
+        }
+        else if (a[i] < b[i]) {
+            bob++;
+        }
+    }
+
+    return {alice, bob};
+}
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string ar_count_temp;
-    getline(cin, ar_count_temp);
+    string a_temp_temp;
+    getline(cin, a_temp_temp);
 
-    int ar_count = stoi(ltrim(rtrim(ar_count_temp)));
+    vector<string> a_temp = split(rtrim(a_temp_temp));
 
-    string ar_temp_temp;
-    getline(cin, ar_temp_temp);
+    vector<int> a(3);
 
-    vector<string> ar_temp = split(rtrim(ar_temp_temp));
+    for (int i = 0; i < 3; i++) {
+        int a_item = stoi(a_temp[i]);
 
-    vector<int> ar(ar_count);
-
-    for (int i = 0; i < ar_count; i++) {
-        int ar_item = stoi(ar_temp[i]);
-
-        ar[i] = ar_item;
+        a[i] = a_item;
     }
 
-    int result = simpleArraySum(ar);
+    string b_temp_temp;
+    getline(cin, b_temp_temp);
 
-    fout << result << "\n";
+    vector<string> b_temp = split(rtrim(b_temp_temp));
+
+    vector<int> b(3);
+
+    for (int i = 0; i < 3; i++) {
+        int b_item = stoi(b_temp[i]);
+
+        b[i] = b_item;
+    }
+
+    vector<int> result = compareTriplets(a, b);
+
+    for (size_t i = 0; i < result.size(); i++) {
+        fout << result[i];
+
+        if (i != result.size() - 1) {
+            fout << " ";
+        }
+    }
+
+    fout << "\n";
 
     fout.close();
 
