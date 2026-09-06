@@ -1,4 +1,4 @@
-# Compare the Triplets
+# A Very Big Sum
 
 ![Difficulty](https://img.shields.io/badge/Difficulty-Medium-yellow)
 
@@ -63,7 +63,7 @@ When we add several integer values, the resulting sum might exceed the above ran
 **Language:** C++  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-09-06T11:05:48.419Z  
+**Submitted:** 2026-09-06T11:22:40.973Z  
 
 ```cpp
 #include <bits/stdc++.h>
@@ -75,70 +75,45 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'compareTriplets' function below.
+ * Complete the 'aVeryBigSum' function below.
  *
- * The function is expected to return an INTEGER_ARRAY.
- * The function accepts following parameters:
- *  1. INTEGER_ARRAY a
- *  2. INTEGER_ARRAY b
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts LONG_INTEGER_ARRAY ar as parameter.
  */
 
-vector<int> compareTriplets(vector<int> a, vector<int> b) {
-    int alice = 0;
-    int bob = 0;
-
-    for (int i = 0; i < 3; i++) {
-        if (a[i] > b[i]) {
-            alice++;
-        }
-        else if (a[i] < b[i]) {
-            bob++;
-        }
+long aVeryBigSum(vector<long> ar) {
+    long sum = 0;
+    for(int i = 0; i<ar.size(); i++){
+        sum = sum + ar[i];
     }
-
-    return {alice, bob};
+    return sum;
 }
+
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string a_temp_temp;
-    getline(cin, a_temp_temp);
+    string ar_count_temp;
+    getline(cin, ar_count_temp);
 
-    vector<string> a_temp = split(rtrim(a_temp_temp));
+    int ar_count = stoi(ltrim(rtrim(ar_count_temp)));
 
-    vector<int> a(3);
+    string ar_temp_temp;
+    getline(cin, ar_temp_temp);
 
-    for (int i = 0; i < 3; i++) {
-        int a_item = stoi(a_temp[i]);
+    vector<string> ar_temp = split(rtrim(ar_temp_temp));
 
-        a[i] = a_item;
+    vector<long> ar(ar_count);
+
+    for (int i = 0; i < ar_count; i++) {
+        long ar_item = stol(ar_temp[i]);
+
+        ar[i] = ar_item;
     }
 
-    string b_temp_temp;
-    getline(cin, b_temp_temp);
+    long result = aVeryBigSum(ar);
 
-    vector<string> b_temp = split(rtrim(b_temp_temp));
-
-    vector<int> b(3);
-
-    for (int i = 0; i < 3; i++) {
-        int b_item = stoi(b_temp[i]);
-
-        b[i] = b_item;
-    }
-
-    vector<int> result = compareTriplets(a, b);
-
-    for (size_t i = 0; i < result.size(); i++) {
-        fout << result[i];
-
-        if (i != result.size() - 1) {
-            fout << " ";
-        }
-    }
-
-    fout << "\n";
+    fout << result << "\n";
 
     fout.close();
 
