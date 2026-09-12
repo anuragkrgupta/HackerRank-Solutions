@@ -1,0 +1,43 @@
+name: Organize solutions (DSA / SQL / GFG)
+
+# Runs after every push (e.g. every time PushMyCode commits a new
+# submission), sorts files into DSA/, SQL/, and "GFG Solutions/",
+# then commits the reorganized result back.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+    # Skip runs triggered by this workflow's own commit, to avoid an infinite loop.
+    if: "!contains(github.event.head_commit.message, '[skip-organize]')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run organizer
+        run: python3 scripts/organize_solutions.py
+
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore: auto-organize solutions into DSA/SQL/GFG Solutions [skip-organize]"
+            git push
+          else
+            echo "Nothing to commit."
+          fi
